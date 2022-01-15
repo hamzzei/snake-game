@@ -1,12 +1,20 @@
 const scoreEl = document.getElementById("scoreEl");
+const hiScoreEl = document.getElementById("hiScoreEl");
+const finalScoreEl = document.getElementById("finalScoreEl");
 const gameArea = document.getElementById("gameArea");
 const startBtn = document.getElementById("startBtn");
+const restartBtn = document.getElementById("restartBtn");
+const modelContainer = document.getElementById("model-container");
+const gameOverMessage = document.getElementById("gameOverMessage");
+const body = document.querySelector("body");
 let gameAreaBlocks = [];
 let snake = [2, 1, 0];
 const width = 10;
 let direction = 1;
 let speed = 600;
 let gameScore = 0;
+let hiScore = 0;
+const hiScoreFromLocalStorage = JSON.parse(localStorage.getItem("hiScore"))
 let timerId;
 const rainbowColors = [
   "apple-lightsalmon",
@@ -16,9 +24,16 @@ const rainbowColors = [
   "apple-lightskyblue",
   "apple-aqua",
   "apple-salmon",
-  "apple-orangered"]
+  "apple-orangered"
+]
 
 let appleColor;
+let isAlive = false;
+
+if (hiScoreFromLocalStorage) {
+  hiScore = hiScoreFromLocalStorage;
+  hiScoreEl.textContent = hiScore;
+}
 
 function randomColor() {
 
@@ -61,6 +76,16 @@ function move() {
     (snake[0] + width > width * width && direction === width) ||
     gameAreaBlocks[snake[0] + direction].classList.contains("snake")
   ) {
+    isAlive = false;
+    modelContainer.classList.add("active")
+    body.classList.remove("no-scroll")
+    finalScoreEl.textContent = gameScore;
+    if (gameScore > hiScore) {
+      hiScore = gameScore;
+      gameOverMessage.textContent = "New Hi-Score! 🥳"
+      localStorage.setItem("hiScore", JSON.stringify(gameScore))
+      hiScoreEl.textContent = gameScore
+    }
     return clearInterval(timerId);
   }
 
@@ -95,25 +120,33 @@ function addApple() {
   }
 }
 
-startBtn.addEventListener("click", function() {
+startBtn.addEventListener("click", startRestart);
+restartBtn.addEventListener("click", startRestart);
+
+function startRestart() {
   clearInterval(timerId)
 
-for(let i = 0; i < width*width; i++) {
-  if (gameAreaBlocks[i].classList.contains(appleColor)) {
-        gameAreaBlocks[i].classList.remove(appleColor)  
-    }
-  if (gameAreaBlocks[i].classList.contains("snake")) {
-        gameAreaBlocks[i].classList.remove("snake")
-    }
+  for(let i = 0; i < width*width; i++) {
+    if (gameAreaBlocks[i].classList.contains(appleColor)) {
+          gameAreaBlocks[i].classList.remove(appleColor)  
+      }
+    if (gameAreaBlocks[i].classList.contains("snake")) {
+          gameAreaBlocks[i].classList.remove("snake")
+      }
+  }
+  
+    direction = 1;
+    speed = 1000;
+    gameScore = 0;
+    finalScoreEl.textContent = 0;
+    scoreEl.textContent = gameScore;
+    timerId = setInterval(move, speed);
+    modelContainer.classList.remove("active")
+    gameOverMessage.textContent = "Game Over! 💀"
+    body.classList.add("no-scroll")
+  
+    snake = [2,1,0]
+    snake.forEach(index => gameAreaBlocks[index].classList.add("snake"))
+    addApple()
+    isAlive = true;
 }
-
-  direction = 1;
-  speed = 1000;
-  gameScore = 0;
-  scoreEl.textContent = gameScore;
-  timerId = setInterval(move, speed);
-
-  snake = [2,1,0]
-  snake.forEach(index => gameAreaBlocks[index].classList.add("snake"))
-  addApple()
-});
