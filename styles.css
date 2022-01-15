@@ -1,0 +1,88 @@
+body {
+    margin: 0;
+    padding: 2em;
+
+    font-size: 1.3rem;
+    font-family: sans-serif;
+}
+
+.container {
+    width: min(80vw, 35rem);
+    margin: 0 auto;
+}
+
+#gameArea {
+    border: 1px solid black;
+    width: min(80vw, 35rem);
+    height: min(80vw, 35rem);
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+button {
+    margin-top: 2em;
+    padding: 0.5em 1.5em;
+    font-size: 1.3rem;
+    color: #fff;
+
+    border: none;
+    border-radius: 0.2em;
+
+    background: #ff7487;
+
+    cursor: pointer;
+
+}
+
+button:hover,
+button:focus {
+    background: #ffaab5;
+}
+
+.block {
+    background: lightgray;
+    width: min(8vw, 3.5rem);
+    height: min(8vw, 3.5rem);
+}
+
+.apple-lightsalmon {
+    background: lightsalmon;
+}
+
+.apple-lightpink {
+    background: lightpink;
+}
+
+.apple-lightgoldenrodyellow {
+    background: lightgoldenrodyellow;
+}
+
+.apple-lightseagreen {
+    background: lightseagreen;
+}
+
+.apple-lightskyblue {
+    background: lightskyblue;
+}
+
+.apple-aqua {
+    background: aqua;
+}
+
+.apple-salmon {
+    background: salmon;
+}
+
+.apple-orangered {
+    background: orangered;
+}
+
+.apple {
+    background: red;
+}
+
+.snake {
+    background: #e3f8ff;
+}
+
