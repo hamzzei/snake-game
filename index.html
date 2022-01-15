@@ -8,15 +8,33 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+
     <div class="container">
       <h1>Snake Game</h1>
-      <p class="score">
-        Score:
-        <span class="score" id="scoreEl">0</span>
-      </p>
+      <div class="score-container">
+        <p class="score">
+          Score:
+          <span class="score" id="scoreEl">0</span>
+        </p>
+        <p class="score" id="hiScore">
+          Hi-Score:
+          <span class="score" id="hiScoreEl">0</span>
+        </p>
+      </div>
       <div id="gameArea"></div>
-      <button id="startBtn">Start / Restart</button>
+      <button id="startBtn">Start</button>
     </div>
+
+    <div id="model-container" class="inactive">
+      <div class="model">
+        <p class="model__heading" id="gameOverMessage">Game Over! 💀</p>
+        <p class="model__text">Final Score:
+          <span id="finalScoreEl">0</span>
+        </p>
+        <button id="restartBtn">Restart</button>
+      </div>
+    </div>
+
     <script src="app.js"></script>
   </body>
 </html>
